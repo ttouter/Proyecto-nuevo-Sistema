@@ -13,14 +13,28 @@ CREATE PROCEDURE AltaAsistente(
     IN p_sexo ENUM('Hombre','Mujer'),
     IN p_email VARCHAR(100),
     IN p_password VARCHAR(255),
+    IN p_codEscuela VARCHAR(50), -- Nuevo parámetro recibido
     OUT mensaje VARCHAR(100)
 )
 BEGIN
+    DECLARE newId INT;
+
+    -- 1. Validar si el correo existe
     IF EXISTS (SELECT 1 FROM Asistente WHERE email = p_email) THEN
         SET mensaje = 'El correo ya está registrado.';
     ELSE
+        -- 2. Crear el Asistente (Usuario base)
         INSERT INTO Asistente (nombre, apellidoPat, apellidoMat, sexo, email, password)
         VALUES (p_nombre, p_apellidoPat, p_apellidoMat, p_sexo, p_email, p_password);
+        
+        -- Obtener el ID recién creado
+        SET newId = LAST_INSERT_ID();
+
+        -- 3. Registrarlo automáticamente como ENTRENADOR con su Escuela
+        -- (Asumimos que quien se registra públicamente es entrenador)
+        INSERT INTO Entrenador (idEntrenador, idAsistente_Asistente, codEscuela_EscuelaProcedencia)
+        VALUES (newId, newId, p_codEscuela);
+
         SET mensaje = 'Registro exitoso';
     END IF;
 END //
@@ -281,6 +295,41 @@ BEGIN
     INSERT INTO Entrenador (idEntrenador, idAsistente_Asistente, codEscuela_EscuelaProcedencia) VALUES (p_id, p_id, p_esc)
     ON DUPLICATE KEY UPDATE codEscuela_EscuelaProcedencia=p_esc;
     SET mensaje = 'Rol asignado.';
+END //
+
+CREATE PROCEDURE ObtenerDashboardEntrenador(IN p_idAsistente INT)
+BEGIN
+    -- ---------------------------------------------------------
+    -- RESULTSET 1: Datos de la Escuela del Entrenador
+    -- Usamos alias (AS) para que coincidan con lo que pide el PHP ($miEscuela['nombre_escuela'])
+    -- ---------------------------------------------------------
+    SELECT 
+        ep.codEscuela AS escuela_id, 
+        ep.nombreEscuela AS nombre_escuela
+    FROM Entrenador en
+    JOIN EscuelaProcedencia ep ON en.codEscuela_EscuelaProcedencia = ep.codEscuela
+    WHERE en.idAsistente_Asistente = p_idAsistente;
+
+    -- ---------------------------------------------------------
+    -- RESULTSET 2: Lista de Equipos de este Entrenador
+    -- Calculamos integrantes y obtenemos rangos de edad
+    -- ---------------------------------------------------------
+    SELECT 
+        e.idEquipo, 
+        e.nombreEquipo, 
+        c.nombre AS categoria, 
+        e.nombre_Evento,
+        c.rangoMin, 
+        c.rangoMax,
+        (SELECT COUNT(*) FROM Participante p WHERE p.idEquipo_Equipo = e.idEquipo) AS num_integrantes,
+        (SELECT GROUP_CONCAT(a.nombre SEPARATOR ', ') 
+         FROM Juez_Evaluacion_Equipo jee 
+         JOIN Juez j ON jee.idJuez = j.idJuez
+         JOIN Asistente a ON j.idAsistente_Asistente = a.idAsistente
+         WHERE jee.idEquipo = e.idEquipo) AS jueces_asignados
+    FROM Equipo e
+    JOIN Categoria c ON e.idCategoria_Categoria = c.idCategoria
+    WHERE e.idAsistente = p_idAsistente;
 END //
 
 DELIMITER ;

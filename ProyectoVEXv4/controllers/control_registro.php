@@ -1,6 +1,5 @@
 <?php
 session_start();
-// Asegúrate de que tu archivo de conexión esté bien configurado con __DIR__
 require_once '../config/conexion.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -10,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ap_paterno = trim($_POST['ap_paterno']);
     $ap_materno = trim($_POST['ap_materno']);
     $sexo       = $_POST['sexo'];
-    $codEscuela = $_POST['codEscuela']; // Recibimos el código de escuela
+    $codEscuela = $_POST['codEscuela']; // Ahora SÍ la usaremos
     $email      = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password   = $_POST['password'];
 
@@ -29,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
     try {
-        // 4. Llamar al Procedimiento (incluyendo :codEscuela)
+        // ACTUALIZACIÓN: Ahora enviamos 7 parámetros (incluyendo la escuela)
         $sql = "CALL AltaAsistente(:nombre, :apPat, :apMat, :sexo, :email, :pass, :codEscuela, @mensaje)";
         $stmt = $pdo->prepare($sql);
         
@@ -39,7 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(':sexo', $sexo);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':pass', $passwordHash);
-        $stmt->bindParam(':codEscuela', $codEscuela); // Bind del nuevo parámetro
+        
+        // Descomentamos y enviamos la escuela
+        $stmt->bindParam(':codEscuela', $codEscuela); 
         
         $stmt->execute();
         $stmt->closeCursor();
@@ -49,11 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensajeBD = $row['mensaje'];
 
         if ($mensajeBD === 'Registro exitoso') {
-            // Éxito (Verde)
-            header("Location: ../views/register/registro.php?success=¡Cuenta creada con éxito! Ya puedes iniciar sesión.");
+            header("Location: ../views/register/registro.php?success=¡Cuenta creada! Ya puedes iniciar sesión como Entrenador.");
             exit();
         } else {
-            // Error (Rojo) - Ej: Correo duplicado
             header("Location: ../views/register/registro.php?error=" . urlencode($mensajeBD));
             exit();
         }
@@ -64,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
 } else {
-    // Si intentan entrar directo
     header("Location: ../views/register/registro.php");
     exit();
 }
