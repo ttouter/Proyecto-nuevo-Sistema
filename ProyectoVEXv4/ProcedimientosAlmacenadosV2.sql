@@ -261,7 +261,18 @@ END //
 DROP PROCEDURE IF EXISTS ObtenerResumenAdmin //
 CREATE PROCEDURE ObtenerResumenAdmin()
 BEGIN
-    SELECT (SELECT COUNT(*) FROM Equipo) as total_equipos, (SELECT COUNT(*) FROM Juez) as total_jueces, (SELECT COUNT(*) FROM Participante) as total_participantes;
+    SELECT 
+        (SELECT COUNT(*) FROM Equipo) as total_equipos, 
+        (SELECT COUNT(*) FROM Evento WHERE fecha >= CURDATE()) as eventos_activos, -- ESTA LINEA FALTABA
+        (SELECT COUNT(*) FROM Juez) as total_jueces, 
+        (SELECT COUNT(*) FROM Participante) as total_participantes;
+END //
+
+-- 2. CORRECCIÓN TABLA EVENTOS: Agregamos la columna 'lugar'
+DROP PROCEDURE IF EXISTS ListarEventos //
+CREATE PROCEDURE ListarEventos()
+BEGIN
+    SELECT nombre, lugar, fecha FROM Evento ORDER BY fecha DESC; -- FALTABA 'lugar'
 END //
 
 DROP PROCEDURE IF EXISTS ListarEquiposAdmin //
@@ -330,6 +341,32 @@ BEGIN
     FROM Equipo e
     JOIN Categoria c ON e.idCategoria_Categoria = c.idCategoria
     WHERE e.idAsistente = p_idAsistente;
+END //
+
+-- 1. Obtener la lista de alumnos de un equipo específico
+DROP PROCEDURE IF EXISTS ObtenerIntegrantesEquipo //
+CREATE PROCEDURE ObtenerIntegrantesEquipo(IN p_idEquipo INT)
+BEGIN
+    SELECT numControl, nombre, apellidoPat, apellidoMat, edad, sexo 
+    FROM Participante 
+    WHERE idEquipo_Equipo = p_idEquipo;
+END //
+
+-- 2. Verificar qué rubros ya fueron evaluados por los jueces
+DROP PROCEDURE IF EXISTS ObtenerEstadoEvaluacion //
+CREATE PROCEDURE ObtenerEstadoEvaluacion(IN p_idEquipo INT)
+BEGIN
+    SELECT 
+        (SELECT COUNT(*) FROM EvaluacionDiseño WHERE idEquipo = p_idEquipo) as eval_diseno,
+        (SELECT COUNT(*) FROM EvaluacionProgramacion WHERE idEquipo = p_idEquipo) as eval_prog,
+        (SELECT COUNT(*) FROM EvaluacionConstruccion WHERE idEquipo = p_idEquipo) as eval_const;
+END //
+
+-- 3. Eliminar un participante (Para gestión del equipo)
+DROP PROCEDURE IF EXISTS BajaParticipante //
+CREATE PROCEDURE BajaParticipante(IN p_numControl INT)
+BEGIN
+    DELETE FROM Participante WHERE numControl = p_numControl;
 END //
 
 DELIMITER ;
