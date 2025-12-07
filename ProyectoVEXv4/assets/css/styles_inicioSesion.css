@@ -1,0 +1,154 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFE8B6;
+}
+
+/* HEADER */
+header {
+    background-color: #2C2C54;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    flex-wrap: wrap;
+}
+
+header .left img {
+    height: 50px;
+}
+
+header .center h1 {
+    font-size: 22px;
+}
+
+header .right {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-header {
+    background-color: #706FD3;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* LOGIN CARD */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+}
+
+.login-box {
+    background-color: #FFF5D6;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.login-box h2 {
+    color: #2C2C54;
+    margin-bottom: 20px;
+}
+
+.login-box label {
+    display: block;
+    text-align: left;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.recordar {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.btn-login {
+    background-color: #40407A;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-links {
+    margin-top: 15px;
+}
+
+.login-links a {
+    display: block;
+    color: #2C2C54;
+    text-decoration: none;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* FOOTER */
+footer {
+    background-color: #2C2C54;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+    }
+
+    .btn-header {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+
+/* ESTILO ERROR*/
+.error-box {
+    background-color: #ffdddd;
+    color: #a30000;
+    border: 1px solid #ff5c5c;
+    padding: 10px 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-align: center;
+}

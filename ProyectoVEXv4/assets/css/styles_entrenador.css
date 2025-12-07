@@ -1,0 +1,196 @@
+/* =========================================
+   ESTILOS ESPECÍFICOS DEL ENTRENADOR (COACH)
+   ========================================= */
+
+/* Paleta de Colores Coach (Azul/Índigo) */
+:root {
+    --coach-primary: #40407A;
+    --coach-secondary: #706FD3;
+    --coach-accent: #33d9b2;
+    --text-dark: #2C2C54;
+}
+
+.logo-coach {
+    font-size: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* 1. STATS CARDS */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+    border-left: 5px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card .icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.stat-card .info h3 { font-size: 0.9rem; color: #aaa; margin-bottom: 5px; }
+.stat-card .info .number { font-size: 1.8rem; font-weight: bold; color: var(--text-dark); margin: 0; }
+.stat-card .info .text-stat { font-size: 1.1rem; font-weight: bold; color: var(--text-dark); margin: 0; }
+
+/* Variantes de color */
+.stat-card.indigo { border-left-color: var(--coach-primary); }
+.stat-card.indigo .icon { background-color: #e3e3f0; color: var(--coach-primary); }
+
+.stat-card.teal { border-left-color: var(--coach-accent); }
+.stat-card.teal .icon { background-color: #dbfbf4; color: var(--coach-accent); }
+
+.stat-card.purple { border-left-color: #b33771; }
+.stat-card.purple .icon { background-color: #f7dbe9; color: #b33771; }
+
+
+/* 2. WELCOME BANNER */
+.coach-banner {
+    background: linear-gradient(135deg, var(--coach-primary), var(--coach-secondary));
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 15px rgba(64, 64, 122, 0.3);
+}
+
+.coach-banner h2 { margin-top: 0; }
+.coach-banner p { margin-bottom: 0; opacity: 0.9; }
+
+
+/* 3. TABLAS */
+.table-responsive { overflow-x: auto; margin-top: 15px; }
+.data-table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
+.data-table th { background-color: var(--coach-primary); color: white; padding: 12px; text-align: left; }
+.data-table td { padding: 12px; border-bottom: 1px solid #eee; }
+.status { padding: 4px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: bold; }
+.status.completed { background-color: #d1f7c4; color: #218c1d; }
+.status.pending { background-color: #fff4bf; color: #8a6d0b; }
+
+
+/* 4. FORMULARIOS */
+.form-actions { display: flex; justify-content: flex-end; margin-top: 20px; }
+.btn-primary { 
+    background-color: var(--coach-primary); 
+    color: white; padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 1rem; 
+    transition: background 0.2s;
+}
+.btn-primary:hover { background-color: #2C2C54; }
+
+.highlight-group {
+    background-color: #f0f0f7;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed var(--coach-secondary);
+    margin-bottom: 20px;
+}
+.big-select { font-size: 1.1rem; padding: 12px; }
+
+
+/* 5. TARJETAS DE EQUIPOS (Mis Equipos) */
+.teams-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.coach-team-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+}
+
+.coach-team-card:hover { transform: translateY(-5px); }
+
+.card-header-img {
+    height: 140px;
+    background-color: #ddd;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-header-img img { width: 100%; height: 100%; object-fit: cover; }
+.placeholder-img { display: flex; align-items: center; justify-content: center; background-color: #e0e0e0; color: #999; }
+
+.category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.card-body { padding: 20px; }
+.card-body h3 { margin: 0 0 5px 0; color: var(--text-dark); }
+.event-name { color: #777; font-size: 0.9rem; margin-bottom: 15px; }
+
+.members-preview {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.avatars { display: flex; }
+.avatar {
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background-color: var(--coach-secondary);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    border: 2px solid white;
+    margin-left: -10px;
+}
+.avatar:first-child { margin-left: 0; }
+
+.card-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.btn-outline {
+    background: white; border: 1px solid var(--coach-primary); color: var(--coach-primary);
+    padding: 8px; border-radius: 6px; cursor: pointer;
+}
+.btn-outline:hover { background: #f0f0f7; }
+
+.btn-solid {
+    background: var(--coach-primary); border: none; color: white;
+    padding: 8px; border-radius: 6px; cursor: pointer;
+}
+.btn-solid:hover { background: #2C2C54; }
+
+/* OCULTAR/MOSTRAR SECCIONES */
+.content-section { display: none; animation: fadeIn 0.3s ease; }
+.content-section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

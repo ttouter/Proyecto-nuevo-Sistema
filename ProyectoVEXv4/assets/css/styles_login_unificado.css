@@ -1,0 +1,249 @@
+/* IMPORTAR FUENTE POPPINS */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Mantenemos el fondo oscuro degradado para que la tarjeta amarilla resalte */
+    background: linear-gradient(135deg, #40407A 0%, #2C2C54 100%) !important;
+    background-color: #2C2C54; 
+    background-attachment: fixed;
+}
+
+.login-wrapper {
+    display: flex;
+    width: 900px;
+    height: 600px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* --- PANEL IZQUIERDO (IMAGEN) --- */
+.login-left {
+    flex: 1;
+    background-image: url('../img/robot.jpeg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.overlay {
+    background: rgba(44, 44, 84, 0.85); 
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    text-align: center;
+}
+
+.brand img { width: 80px; margin-bottom: 15px; }
+.brand h1 { font-size: 24px; font-weight: 700; margin-bottom: 10px; }
+.overlay p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+
+/* --- PANEL DERECHO (FORMULARIO) --- */
+.login-right {
+    flex: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* CAMBIO: Color Amarillo del Index (#F9E595) en lugar de blanco (#ffffff) */
+    background-color: #F9E595; 
+}
+
+.login-container h2 { color: #2C2C54; font-size: 28px; margin-bottom: 5px; }
+.subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 30px; }
+
+/* TABS DE ROLES */
+.role-tabs {
+    display: flex;
+    /* Ajuste: Fondo blanco semitransparente para que contraste con el amarillo */
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+
+.role-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+    color: #4b4b4b; /* Texto un poco más oscuro para legibilidad en amarillo */
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.role-tab:hover { color: #2C2C54; }
+
+.role-tab.active {
+    background: white; /* Tab activa blanca resalta bien sobre amarillo */
+    color: #40407A; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* INPUTS */
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-size: 13px; color: #2C2C54; font-weight: 600; margin-bottom: 8px; }
+
+.input-wrapper {
+    position: relative;
+    border: 1px solid #d1d1d1; /* Borde sutilmente más oscuro */
+    border-radius: 8px;
+    background: #ffffff; /* Fondo blanco puro para los inputs */
+    transition: 0.3s;
+}
+
+.input-wrapper:focus-within { border-color: #40407A; box-shadow: 0 0 0 3px rgba(64, 64, 122, 0.2); }
+
+.input-wrapper input {
+    width: 100%;
+    padding: 12px 40px; 
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+}
+
+.input-wrapper .icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b2bec3;
+    font-size: 14px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b2bec3;
+    cursor: pointer;
+}
+
+/* FOOTER DEL FORM */
+.form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    font-size: 13px;
+    min-height: 24px;
+}
+
+.forgot-pass { color: #40407A; text-decoration: none; font-weight: 500; }
+.forgot-pass:hover { text-decoration: underline; }
+
+/* CHECKBOX PERSONALIZADO */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #2C2C54; /* Texto más oscuro para contraste */
+}
+
+.checkbox-container input { display: none; }
+.checkmark {
+    width: 16px; height: 16px; 
+    border: 1px solid #2C2C54; /* Borde oscuro para ver mejor sobre amarillo */
+    border-radius: 3px; margin-right: 8px;
+    background: white; /* Fondo blanco */
+    display: inline-block; position: relative;
+}
+.checkbox-container input:checked + .checkmark { background: #40407A; border-color: #40407A; }
+.checkbox-container input:checked + .checkmark::after {
+    content: ''; position: absolute; left: 5px; top: 2px; width: 3px; height: 8px;
+    border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg);
+}
+
+/* BOTÓN */
+.btn-submit {
+    width: 100%;
+    background-color: #2C2C54;
+    color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover { background-color: #40407A; transform: translateY(-2px); }
+
+.register-link { text-align: center; margin-top: 20px; font-size: 13px; color: #4b4b4b; }
+.register-link a { color: #40407A; font-weight: 700; text-decoration: none; }
+
+/* ALERTAS */
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.alert.error { background: #ffeaa7; color: #d63031; border: 1px solid #fdcb6e; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .login-wrapper { width: 90%; height: auto; flex-direction: column; }
+    .login-left { height: 150px; flex: none; }
+    .overlay { padding: 20px; }
+    .login-right { padding: 30px; }
+}
+
+.btn-back-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background-color: transparent; /* Fondo transparente */
+    border: 2px solid #2C2C54;     /* Borde azul oscuro */
+    color: #2C2C54;                /* Texto azul oscuro */
+    border-radius: 50px;           /* Borde redondeado (Pill shape) */
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 25px;           /* Separación del título */
+    transition: all 0.3s ease;
+    width: fit-content;            /* Se ajusta al contenido */
+}
+
+.btn-back-home:hover {
+    background-color: #2C2C54;     /* Al pasar mouse: Fondo azul */
+    color: #ffffff;                /* Texto blanco */
+    transform: translateX(-5px);   /* Pequeño movimiento a la izquierda */
+    box-shadow: 0 4px 10px rgba(44, 44, 84, 0.2);
+}
+
+.btn-back-home i {
+    font-size: 1rem;
+}
